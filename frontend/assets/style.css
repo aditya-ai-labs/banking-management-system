@@ -1,0 +1,19 @@
+.stButton button{
+
+background:#2563eb;
+
+color:white;
+
+border:none;
+
+border-radius:10px;
+
+font-weight:bold;
+
+height:45px;
+}
+
+.stButton button:hover{
+
+background:#1d4ed8;
+}
