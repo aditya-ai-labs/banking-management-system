@@ -8,6 +8,7 @@ from models import Customer
 
 from schemas import CustomerCreate
 from schemas import Transaction
+from models import TransactionHistory
 
 import random
 
@@ -81,6 +82,15 @@ def deposit_money(
 
     customer.balance += transaction.amount
 
+    history = TransactionHistory(
+    customer_id=customer.id,
+    account_number=customer.account_number,
+    transaction_type="Deposit",
+    amount=transaction.amount
+)
+
+    db.add(history)
+
     db.commit()
 
     return {
@@ -114,6 +124,15 @@ def withdraw_money(
         }
 
     customer.balance -= transaction.amount
+
+    history = TransactionHistory(
+    customer_id=customer.id,
+    account_number=customer.account_number,
+    transaction_type="Withdraw",
+    amount=transaction.amount
+)
+
+    db.add(history)
 
     db.commit()
 

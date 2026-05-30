@@ -53,39 +53,41 @@ withdrawals and banking operations.
 
 """, unsafe_allow_html=True)
 
-c1,c2,c3,c4 = st.columns(4)
+import requests
 
-with c1:
-    st.markdown("""
-    <div class="card">
-    <h2>👥</h2>
-    <h3>Customers</h3>
-    </div>
-    """, unsafe_allow_html=True)
+customers = requests.get(
+    "http://127.0.0.1:8000/customer/all"
+).json()
 
-with c2:
-    st.markdown("""
-    <div class="card">
-    <h2>💰</h2>
-    <h3>Deposits</h3>
-    </div>
-    """, unsafe_allow_html=True)
+transactions = requests.get(
+    "http://127.0.0.1:8000/transactions/"
+).json()
 
-with c3:
-    st.markdown("""
-    <div class="card">
-    <h2>💸</h2>
-    <h3>Withdrawals</h3>
-    </div>
-    """, unsafe_allow_html=True)
+total_customers = len(customers)
 
-with c4:
-    st.markdown("""
-    <div class="card">
-    <h2>📊</h2>
-    <h3>Reports</h3>
-    </div>
-    """, unsafe_allow_html=True)
+total_transactions = len(transactions)
+
+total_balance = sum(
+    c["balance"]
+    for c in customers
+)
+
+c1,c2,c3 = st.columns(3)
+
+c1.metric(
+    "Customers",
+    total_customers
+)
+
+c2.metric(
+    "Transactions",
+    total_transactions
+)
+
+c3.metric(
+    "Bank Balance",
+    f"₹ {total_balance:,.0f}"
+)
 
 st.markdown("---")
 

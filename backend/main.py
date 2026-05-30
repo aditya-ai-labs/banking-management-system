@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routers.transaction import router as transaction_router
 
 from database import engine
 
@@ -26,6 +27,8 @@ app.add_middleware(
 app.include_router(
     customer_router
 )
+
+app.include_router(transaction_router)
 
 
 @app.get("/")
