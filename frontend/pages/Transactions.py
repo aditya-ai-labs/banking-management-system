@@ -22,7 +22,11 @@ else:
         transactions
     )
 
+    st.subheader(
+    "Recent Transactions"
+)
+
     st.dataframe(
-        df,
+        df.tail(10),
         use_container_width=True
     )

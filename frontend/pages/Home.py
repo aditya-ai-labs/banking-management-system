@@ -94,3 +94,32 @@ st.markdown("---")
 st.info(
     "Use the sidebar to access banking modules."
 )
+
+
+st.markdown("---")
+
+st.subheader(
+    "🏦 Banking Services"
+)
+
+c1,c2,c3,c4 = st.columns(4)
+
+with c1:
+    st.success(
+        "👤 Account Management"
+    )
+
+with c2:
+    st.success(
+        "💰 Deposits"
+    )
+
+with c3:
+    st.success(
+        "💸 Withdrawals"
+    )
+
+with c4:
+    st.success(
+        "📄 Mini Statement"
+    )

@@ -77,3 +77,22 @@ st.dataframe(
     df,
     use_container_width=True
 )
+
+
+
+highest_balance = 0
+richest_customer = ""
+
+for customer in customers:
+
+    if customer["balance"] > highest_balance:
+
+        highest_balance = customer["balance"]
+
+        richest_customer = customer["name"]
+
+st.info(
+    f"🏆 Highest Balance Holder : "
+    f"{richest_customer} "
+    f"(₹ {highest_balance:,.0f})"
+)

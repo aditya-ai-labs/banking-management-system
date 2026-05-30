@@ -1,48 +1,52 @@
 import streamlit as st
 import requests
-import pandas as pd
 
-st.title("👥 Customers")
+st.title("👥 Customer Directory")
 
 search = st.text_input(
-    "🔍 Search Customer"
+    "🔍 Search Account Number"
 )
 
-response = requests.get(
+customers = requests.get(
     "http://127.0.0.1:8000/customer/all"
-)
+).json()
 
-customers = response.json()
+filtered = []
 
-if search:
+for customer in customers:
 
-    customers = [
-        c
-        for c in customers
-        if search.lower()
-        in c["name"].lower()
-    ]
+    if search == "":
+        filtered.append(customer)
 
-if customers:
+    elif search in customer["account_number"]:
+        filtered.append(customer)
 
-    for customer in customers:
-
-        with st.container():
-
-            st.markdown(f"""
-            ### {customer['name']}
-
-            Account No:
-            {customer['account_number']}
-
-            Balance:
-            ₹ {customer['balance']}
-            """)
-
-            st.divider()
-
-else:
+if len(filtered) == 0:
 
     st.warning(
         "No Customer Found"
     )
+
+for customer in filtered:
+
+    with st.expander(
+        f"{customer['name']} | {customer['account_number']}"
+    ):
+
+        st.write(
+            f"📧 {customer['email']}"
+        )
+
+        st.write(
+            f"📱 {customer['phone']}"
+        )
+
+        st.write(
+            f"💰 Balance: ₹ {customer['balance']}"
+        )
+
+        if customer["balance"] < 1000:
+
+            st.error(
+                "⚠ Low Balance Alert"
+            )
